@@ -42,6 +42,16 @@ export default function App() {
       const rate = data.data.EGP.value;
       const timestamp = new Date().toLocaleString();
       
+      if (rate !== exchangeRate) {
+        const updatedEntries = entries.map(entry => ({
+          ...entry,
+          totalEGP: (parseFloat(entry.totalGBP) * rate).toFixed(2),
+          exchangeRate: rate
+        }));
+        setEntries(updatedEntries);
+        localStorage.setItem('work_entries', JSON.stringify(updatedEntries));
+      }
+
       setExchangeRate(rate);
       setLastUpdated(timestamp);
       
